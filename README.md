@@ -5,4 +5,6 @@ This mod provides a "Apartment Configuration Panel", which allows apartment owne
 
 This mod also provides an "Apartment Configuration Copier", for copying apartment configurations (i.e. category, description, size) to another not configured panel. To copy, punch a configured panel with the copier; to paste, right-click a not configured panel. When being pasted, the description will be altered if the original description ends with a number.
 
+[upstream]: https://github.com/Sokomine/apartment/
+
 
