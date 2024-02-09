@@ -162,6 +162,12 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 				else
 					infotext = "Exchange shop ("..pname..")";
 				end
+			elseif n.name == "basic_signs:sign_wall_locked" then
+				if original_owner == owner then
+					infotext = "Locked sign, owned by "..original_owner..")"
+				else
+					infotext = "Locked sign in Ap. "..descr.." ("..disp_pname..")"
+				end
 			end
 			if infotext ~= "" then
 				meta:set_string("infotext",infotext)
