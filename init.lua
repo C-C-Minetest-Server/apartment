@@ -172,13 +172,11 @@ apartment.rent = function( pos, owner, oldmetadata, actor )
 		end
 	end
 
-	meta:set_string("owner",owner)
-
 	if not apartment.apartments[category] then apartment.apartments[category] = {} end
-	apartment.apartments[category][descr] = {pos=pos,original_owner=original_owner,owner=owner}
-	apartment.data_modified = true
-
 	if not oldmetadata then
+		meta:set_string("owner",owner)
+		apartment.apartments[category][descr] = {pos=pos,original_owner=original_owner,owner=owner}
+		apartment.data_modified = true
 		minetest.debug(owner,original_owner,node.name)
 		if (owner == "" or original_owner == owner) and (node.name == 'apartment:apartment_occupied') then
 			minetest.swap_node( pos, {name='apartment:apartment_free', param2 = node.param2} )
@@ -239,11 +237,11 @@ apartment.after_dig_node = function(pos, oldnode, oldmetadata, digger)
 
 		local descr = oldmetadata.fields[ "descr" ]
 		local category = oldmetadata.fields[ "category" ]
-		if( apartment.apartments[ descr ] ) then
+		if( apartment.apartments[ category ] and apartment.apartments[ category ][descr] ) then
 			-- actually remove the apartment
 			oldmetadata.param2 = oldnode.param2
 			apartment.rent( pos, '', oldmetadata, digger )
-			apartment.apartments[ descr ] = nil
+			apartment.apartments[ category ][descr] = nil
 			apartment.data_modified = true
 			minetest.chat_send_player( digger:get_player_name(), S("Removed apartment @1@@@2 successfully.",descr,category))
 		end
