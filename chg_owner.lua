@@ -47,7 +47,10 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 				smartshop.update_info(pos)
 			elseif smartshop.api and smartshop.api.get_object then -- flux
 				local obj = smartshop.api.get_object(pos)
+				-- For SOME REASON set_unlimited must be called BEFORE for unrent to work for admins renting apartments
+				obj:set_unlimited(false)
 				obj:initialize_metadata(owner)
+				obj:set_unlimited(false)
 				obj:initialize_inventory()
 				obj:update_appearance()
 			end
