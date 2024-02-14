@@ -113,22 +113,21 @@ p.configure_gui = flow.make_gui(function(player, ctx)
 						local category   = tostring(fields.category) or ""
 						local descr      = tostring(fields.descr) or ""
 
-						if size_left < 0 or size_left > 10
-							or size_right < 0 or size_right > 10
-							or size_up < 0 or size_up > 10
-							or size_down < 0 or size_down > 10
-							or size_front < 0 or size_front > 10
-							or size_back < 0 or size_back > 10
-							or not category or not descr then
-							minetest.chat_send_player(name,
-								S('Error: Not all fields have been filled in or the area is too large.'))
+						if math.min(size_left, size_right, size_up, size_down, size_front, size_back) < 0
+						or not category or not descr then
+							minetest.chat_send_player(name, S("Error: Not all fields have been filled."))
+							return
+						end
+
+						if math.max(size_left, size_right, size_up, size_down, size_front, size_back) > 10 then
+							minetest.chat_send_player(name, S("Error: The area is too large."))
 							return
 						end
 
 						if apartment.apartments[category] and apartment.apartments[category][descr] then
 							minetest.chat_send_player(name,
-								S(
-								"Error: The apartment @1@@@2 already exists. Please choose a different name or category.",
+								S("Error: The apartment @1@@@2 already exists. " ..
+								  "Please choose a different name or category.",
 									descr, category))
 							return
 						end
@@ -196,11 +195,12 @@ p.panel_control = flow.make_gui(function(player, ctx)
 				local status, msg = apartment.rent(pos, original_owner, nil, player)
 				if status then
 					minetest.chat_send_player(name,
-						S("You have ended your rent of apartment @1@@@2. It is free for others to rent again.", descr,
-							category))
+						S("You have ended your rent of apartment @1@@@2. It is free for others to rent again.",
+							descr, category))
 				else
-					minetest.chat_send_player(name, 'Something went wrong when giving back the apartment @1@@@2. (@3)',
-						descr, category, msg)
+					minetest.chat_send_player(name,
+						S('Something went wrong when giving back the apartment @1@@@2. (@3)',
+							descr, category, msg))
 				end
 				return true
 			end
@@ -224,8 +224,8 @@ p.panel_control = flow.make_gui(function(player, ctx)
 
 					if not (apartment.apartments[category] and apartment.apartments[category][descr]) then
 						minetest.chat_send_player(name,
-							S(
-							"This apartment (@1@@@2) is not registered. Please unrent it and ask the original builder to re-configure this panel.",
+							S("This apartment (@1@@@2) is not registered. " ..
+							  "Please unrent it and ask the original builder to re-configure this panel.",
 								descr, category))
 						return true
 					end
@@ -233,8 +233,8 @@ p.panel_control = flow.make_gui(function(player, ctx)
 					for k, v in pairs(apartment.apartments[category]) do
 						if v and v.owner == name then
 							minetest.chat_send_player(name,
-								S(
-								"Sorry, you can only rent one apartment per category at a time. You have already rented apartment @1@@@2.",
+								S("Sorry, you can only rent one apartment per category at a time. " ..
+								  "You have already rented apartment @1@@@2.",
 									descr, category))
 							return false
 						end
@@ -245,8 +245,9 @@ p.panel_control = flow.make_gui(function(player, ctx)
 						minetest.chat_send_player(name,
 							S("You have rented apartment @1@@@2. Enjoy your stay!", descr, category))
 					else
-						minetest.chat_send_player(name, 'Something went wrong when renting the apartment @1@@@2. (@3)',
-							descr, category, msg)
+						minetest.chat_send_player(name,
+							S('Something went wrong when renting the apartment @1@@@2. (@3)',
+								descr, category, msg))
 					end
 					return true
 				end
@@ -277,8 +278,8 @@ p.panel_control = flow.make_gui(function(player, ctx)
 							owner, descr, category))
 				else
 					minetest.chat_send_player(name,
-						'Something went wrong when throwing @1 out of the apartment @2@@@3. (@4)', owner, descr, category,
-						msg)
+						S('Something went wrong when throwing @1 out of the apartment @2@@@3. (@4)', 
+							owner, descr, category, msg))
 				end
 				return true
 			end
@@ -310,12 +311,12 @@ p.panel_control = flow.make_gui(function(player, ctx)
 		gui.HBox {
 			gui.VBox {
 				gui.Label {
-					label = S("Back\n@1", size_back),
+					label = S("Back") .. "\n" .. size_back,
 					w = 1, expand = true, align_h = "center"
 				},
 				gui.HBox {
 					gui.Label {
-						label = S("Left\n@1", size_left),
+						label = S("Left") .. "\n" .. size_left,
 						w = 1, expand = true,
 					},
 					gui.Image {
@@ -323,27 +324,27 @@ p.panel_control = flow.make_gui(function(player, ctx)
 						expand = true,
 					},
 					gui.Label {
-						label = S("Right\n@1", size_right),
+						label = S("Right") .. "\n" .. size_right,
 						w = 1, expand = true,
 					},
 				},
 				gui.Label {
-					label = S("Front\n@1", size_front),
+					label = S("Front") .. "\n" .. size_front,
 					w = 1, expand = true, align_h = "center"
 				},
 			},
 			gui.VBox { w = 4, expand = true, align_h = "right",
 				gui.HBox {
 					gui.Label {
-						label = S("Up\n@1", size_up),
+						label = S("Up") .. "\n" .. size_up,
 						expand = true, w = 1,
 					},
 					gui.Label {
-						label = S("Down\n@1", size_down),
+						label = S("Down") .. "\n" .. size_down,
 						expand = true, w = 1,
 					},
 				},
-				gui.Spacer {},
+				gui.Spacer{},
 				btn,
 			}
 		}

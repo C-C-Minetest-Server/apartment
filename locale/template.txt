@@ -1,0 +1,64 @@
+# textdomain: apartment
+
+##[ chg_owner.lua ]##
+@1 in Ap. @2 (@3)=
+Apartment @1 (@2)=
+Rent apartment @1 here by right-clicking this panel!=
+Apartment rental control panel for apartment @1 (@2)=
+
+##[ gui.lua ]##
+Apartment Configuration=
+Category=
+In one category, every player can only rent one apartment.=
+Name or ID=
+This is the unique ID of this apartment in this category.=
+The apartment shall extend this many blocks from this panel:=
+Back=
+Left=
+Right=
+Front=
+Up=
+Down=
+Abort=
+Store and Offer=
+Error: Not all fields have been filled.=
+Error: The area is too large.=
+Error: The apartment @1@@@2 already exists. Please choose a different name or category.=
+Apartment @1@@@2 is ready for rental.=
+Failed to create apartment @1@@@2. (@3)=
+This apartment @nhave been rented.=
+This apartment @nwas glitched.=
+Unrent=
+You have ended your rent of apartment @1@@@2. It is free for others to rent again.=
+Something went wrong when giving back the apartment @1@@@2. (@3)=
+Dig the panel @nto remove this apartment.=
+Rent=
+This apartment (@1@@@2) is not registered. Please unrent it and ask the original builder to re-configure this panel.=
+Sorry, you can only rent one apartment per category at a time. You have already rented apartment @1@@@2.=
+You have rented apartment @1@@@2. Enjoy your stay!=
+Something went wrong when renting the apartment @1@@@2. (@3)=
+Force Unrent=
+Player @1 has been thrown out of apartment @2@@@3. It can now be rented by another player.=
+Something went wrong when throwing @1 out of the apartment @2@@@3. (@4)=
+Apartment @1@@@2=
+Owner: @1=
+Now rented by: @1=
+The apartment extends this many blocks from this panel:=
+
+##[ init.lua ]##
+Allows player to throw other players out from apartments not owned by them.=
+Apartment Management Panel (unconfigured)=
+Apartment Management Panel (owned by @1)=
+Sorry. Only the original owner of this apartment control panel can dig it.=
+The apartment is currently rented to @1. Please end that first.=
+Error: Could not find information about the apartment panel that is to be removed.=
+Removed apartment @1@@@2 successfully.=
+Apartment Configuaration Copier=
+Please configure the panel first before copying configurations from it.=
+Apartment Configuaration Copier@nU:@1 D:@2 L:@3 R:@4 F:@5 B:@6@n@7@@@8@nRightclick on a panel to paste the configurations.=
+Configuration copied.=
+Apartment Management Panel=
+[<category>]=
+Teleports you back to the apartment you rented.=
+You do not have an apartment in category @1.=
+Welcome back to your apartment @1@@@2.=

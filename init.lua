@@ -292,6 +292,7 @@ end
 minetest.register_craftitem("apartment:configuration_copier", {
 	description = S("Apartment Configuaration Copier"),
 	inventory_image = "apartment_configuration_copier.png",
+	stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
 		if not user:is_player() then return end
 		local name = user:get_player_name()
@@ -363,7 +364,6 @@ minetest.register_node("apartment:apartment_free", {
 })
 
 minetest.register_node("apartment:apartment_occupied", {
-	description      = S("Apartment Management Panel") .. " Occupied",
 	drawtype         = "nodebox",
 	tiles            = { "default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
 		"default_steel_block.png",
@@ -393,7 +393,7 @@ minetest.register_node("apartment:apartment_occupied", {
 
 if apartment.enable_aphome_command then
 	minetest.register_chatcommand("aphome", {
-		params = "[<category>]",
+		params = S("[<category>]"),
 		description = S("Teleports you back to the apartment you rented."),
 		privs = { home = true },
 		func = function(name, param)
