@@ -47,7 +47,7 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 				smartshop.update_info(pos)
 			elseif smartshop.api and smartshop.api.get_object then -- flux
 				local obj = smartshop.api.get_object(pos)
-				obj:initialize_metadata(actor)
+				obj:initialize_metadata(owner)
 				obj:initialize_inventory()
 				obj:update_appearance()
 			end
