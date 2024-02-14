@@ -36,7 +36,7 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 			travelnet.remove_box(pos,  nil, oldmetadata, actor )
 			meta:set_string("owner", owner_or_orig)
 			minetest.registered_nodes[ n.name ].after_place_node(pos, actor, nil)
-		elseif n.name == "smartshop:shop" then
+		elseif n:find("^smartshop:shop") then
 			if smartshop.update_info then -- AiTechEye
 				meta:set_string("owner", owner_or_orig)
 				if meta:get_int("type") == 0 and not (minetest.check_player_privs(owner_or_orig, {creative=true}) or minetest.check_player_privs(owner_or_orig, {give=true})) then
@@ -47,8 +47,6 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 				smartshop.update_info(pos)
 			elseif smartshop.api and smartshop.api.get_object then -- flux
 				local obj = smartshop.api.get_object(pos)
-				-- For SOME REASON set_unlimited must be called BEFORE for unrent to work for admins renting apartments
-				obj:set_unlimited(false)
 				obj:initialize_metadata(owner_or_orig)
 				obj:set_unlimited(false)
 				obj:initialize_inventory()
