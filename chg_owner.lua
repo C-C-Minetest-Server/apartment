@@ -37,13 +37,20 @@ apartment.chg_owner = function(panel_pos,pos,category,descr,original_owner,now_o
 			meta:set_string("owner", owner_or_orig)
 			minetest.registered_nodes[ n.name ].after_place_node(pos, actor, nil)
 		elseif n.name == "smartshop:shop" then
-			meta:set_string("owner", owner_or_orig)
-			if meta:get_int("type") == 0 and not (minetest.check_player_privs(owner_or_orig, {creative=true}) or minetest.check_player_privs(owner_or_orig, {give=true})) then
-				-- Avoid non-unlimited player taking unlimited player's smartshop'
-				meta:set_int("creative",0)
-				meta:set_int("type",1)
+			if smartshop.update_info then -- AiTechEye
+				meta:set_string("owner", owner_or_orig)
+				if meta:get_int("type") == 0 and not (minetest.check_player_privs(owner_or_orig, {creative=true}) or minetest.check_player_privs(owner_or_orig, {give=true})) then
+					-- Avoid non-unlimited player taking unlimited player's smartshop'
+					meta:set_int("creative",0)
+					meta:set_int("type",1)
+				end
+				smartshop.update_info(pos)
+			elseif smartshop.api and smartshop.api.get_object then -- flux
+				local obj = smartshop.api.get_object(pos)
+				obj:initialize_metadata(actor)
+				obj:initialize_inventory()
+				obj:update_appearance()
 			end
-			smartshop.update_info(pos)
 		else -- These does not require special processing
 			local disp_pname = owner or "- vacant -"
 			local disp_descr = descr .. "@" .. category

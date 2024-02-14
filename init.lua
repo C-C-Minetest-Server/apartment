@@ -177,7 +177,6 @@ apartment.rent = function( pos, owner, oldmetadata, actor )
 		meta:set_string("owner",owner)
 		apartment.apartments[category][descr] = {pos=pos,original_owner=original_owner,owner=owner}
 		apartment.data_modified = true
-		minetest.debug(owner,original_owner,node.name)
 		if (owner == "" or original_owner == owner) and (node.name == 'apartment:apartment_occupied') then
 			minetest.swap_node( pos, {name='apartment:apartment_free', param2 = node.param2} )
 		elseif (original_owner ~= owner) and (node.name == 'apartment:apartment_free') then
