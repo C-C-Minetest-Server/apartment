@@ -36,7 +36,7 @@ apartment.chg_owner = function(panel_pos, pos, category, descr, original_owner, 
 			travelnet.remove_box(pos, nil, oldmetadata, actor)
 			meta:set_string("owner", owner_or_orig)
 			minetest.registered_nodes[n.name].after_place_node(pos, actor, nil)
-		elseif n:find("^smartshop:shop") then
+		elseif string.find(n.name, "^smartshop:shop") then
 			if smartshop.update_info then -- AiTechEye
 				meta:set_string("owner", owner_or_orig)
 				if meta:get_int("type") == 0 and not (minetest.check_player_privs(owner_or_orig, { creative = true }) or minetest.check_player_privs(owner_or_orig, { give = true })) then
