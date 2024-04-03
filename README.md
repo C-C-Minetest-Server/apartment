@@ -8,6 +8,6 @@ This mod also provides an "Apartment Configuration Copier", for copying apartmen
 ## Note
 This mod, for the servers only using the panel, is a drop-in replacement. However, for those using the apartment spawner, this mod is not compactible.
 
-[upstream]: https://github.com/Sokomine/apartment/
+[upstream]: https://content.minetest.net/packages/Sokomine/apartment/
 
 
