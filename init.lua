@@ -290,7 +290,7 @@ apartment.on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 end
 
 minetest.register_craftitem("apartment:configuration_copier", {
-	description = S("Apartment Configuaration Copier"),
+	description = S("Apartment Configuration Copier"),
 	inventory_image = "apartment_configuration_copier.png",
 	stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
@@ -340,55 +340,57 @@ minetest.register_craftitem("apartment:configuration_copier", {
 })
 
 minetest.register_node("apartment:apartment_free", {
-	description      = S("Apartment Management Panel"),
-	drawtype         = "nodebox",
-	tiles            = { "default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
+	description       = S("Apartment Management Panel"),
+	drawtype          = "nodebox",
+	tiles             = { "default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
 		"default_steel_block.png",
 		"default_steel_block.png", "apartment_controls_vacant.png", "default_steel_block.png" },
-	paramtype        = "light",
-	paramtype2       = "facedir",
-	light_source     = 14,
-	groups           = { cracky = 2 },
-	node_box         = {
+	use_texture_alpha = "opaque",
+	paramtype         = "light",
+	paramtype2        = "facedir",
+	light_source      = 14,
+	groups            = { cracky = 2 },
+	node_box          = {
 		type = "fixed",
 		fixed = {
 			{ -0.5 + (1 / 16), -0.5 + (1 / 16), 0.5, 0.5 - (1 / 16), 0.5 - (1 / 16), 0.30 },
 
 		}
 	},
-	on_construct     = apartment.on_construct,
-	after_place_node = apartment.after_place_node,
-	can_dig          = apartment.can_dig,
-	after_dig_node   = apartment.after_dig_node,
-	on_rightclick    = apartment.on_rightclick,
+	on_construct      = apartment.on_construct,
+	after_place_node  = apartment.after_place_node,
+	can_dig           = apartment.can_dig,
+	after_dig_node    = apartment.after_dig_node,
+	on_rightclick     = apartment.on_rightclick,
 })
 
 minetest.register_node("apartment:apartment_occupied", {
-	drawtype         = "nodebox",
-	tiles            = { "default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
+	drawtype          = "nodebox",
+	tiles             = { "default_steel_block.png", "default_steel_block.png", "default_steel_block.png",
 		"default_steel_block.png",
 		"default_steel_block.png", "apartment_controls_occupied.png", "default_steel_block.png" },
-	paramtype        = "light",
-	paramtype2       = "facedir",
-	light_source     = 14,
-	groups           = { cracky = 2, not_in_creative_inventory = 1 },
-	node_box         = {
+	use_texture_alpha = "opaque",
+	paramtype         = "light",
+	paramtype2        = "facedir",
+	light_source      = 14,
+	groups            = { cracky = 2, not_in_creative_inventory = 1 },
+	node_box          = {
 		type = "fixed",
 		fixed = {
 			{ -0.5 + (1 / 16), -0.5 + (1 / 16), 0.5, 0.5 - (1 / 16), 0.5 - (1 / 16), 0.30 },
 
 		}
 	},
-	on_construct     = apartment.on_construct,
-	after_place_node = function(pos, placer)
+	on_construct      = apartment.on_construct,
+	after_place_node  = function(pos, placer)
 		local node = minetest.get_node(pos)
 		node.name = "apartment:apartment_free"
 		minetest.swap_node(pos, node)
 		return apartment.after_place_node(pos, placer)
 	end,
-	can_dig          = apartment.can_dig,
-	after_dig_node   = apartment.after_dig_node,
-	on_rightclick    = apartment.on_rightclick,
+	can_dig           = apartment.can_dig,
+	after_dig_node    = apartment.after_dig_node,
+	on_rightclick     = apartment.on_rightclick,
 })
 
 if apartment.enable_aphome_command then
